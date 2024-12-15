@@ -3,25 +3,25 @@ import os
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
-from dotenv import find_dotenv, load_dotenv
 
+from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
+
+from handlers.user_private import user_private_router
+from common.bot_cmds_list import private_cmds
+
+ALLOWED_UPDATES = ['message, edited_message']
 
 bot = Bot(token=os.getenv('BOT_TOKEN'))
 
 dp = Dispatcher()
-
-@dp.message(CommandStart())
-async def start_cmd(msg: types.Message):
-    await msg.answer(f'Приветствую, {msg.from_user.first_name}!\nГотовы стать следующим миллионером?')
-
-
-@dp.message()
-async def echo_cmd(msg: types.Message):
-    await msg.answer('Вы написали: \n'+msg.text+'\n я не понимаю!')
+dp.include_router(user_private_router)
 
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    # очистка команд бота
+    # await bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
+    await bot.set_my_commands(commands=private_cmds,scope=types.BotCommandScopeAllPrivateChats())
+    await dp.start_polling(bot,allowed_updates=ALLOWED_UPDATES)
 
 asyncio.run(main())
