@@ -2,7 +2,7 @@ import sqlite3
 
 db_name = 'demo.db'
 
-
+# получение из бд случайного вопроса заданной сложности
 def get_question(level):
     cn = sqlite3.connect(db_name)
     # print('сложность=',[level])
@@ -17,7 +17,7 @@ def get_question(level):
     return q
 
 
-# добавление нового вопроса
+# добавление нового вопроса -
 def add_question(level):
     cn = sqlite3.connect(db_name)
     # print('сложность=',[level])

@@ -25,7 +25,6 @@ dp = Dispatcher()
 dp.include_router(user_private_router)
 
 
-
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
     print(bot_admins)

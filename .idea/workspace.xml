@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cde7017-2a68-45e6-a840-d3a5cc9ba2bc" name="Changes" comment="Empty Bot + dotenv + Cmds">
+    <list default="true" id="4cde7017-2a68-45e6-a840-d3a5cc9ba2bc" name="Changes" comment="bot with qst">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/bot_cmds_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/bot_cmds_list.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/user_private.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/user_private.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -148,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734343920514</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="bot with qst">
+      <option name="closed" value="true" />
+      <created>1734368252361</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1734368252361</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -158,6 +165,7 @@
     <MESSAGE value="Empty Bot" />
     <MESSAGE value="Empty Bot + dotenv" />
     <MESSAGE value="Empty Bot + dotenv + Cmds" />
-    <option name="LAST_COMMIT_MESSAGE" value="Empty Bot + dotenv + Cmds" />
+    <MESSAGE value="bot with qst" />
+    <option name="LAST_COMMIT_MESSAGE" value="bot with qst" />
   </component>
 </project>

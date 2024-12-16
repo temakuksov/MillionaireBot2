@@ -16,7 +16,7 @@ AMOUNT = [
 ]  # Стоимость вопроса
 GUARANTEED_AMOUNT = ['0'] * 5 + ['5 000'] * 5 + ['100 000'] * 5  # несгораемые суммы
 
-
+NUM_QST = len(AMOUNT) # максимальное количество вопросов в игре
 
 
 @user_private_router.message(CommandStart())
@@ -35,7 +35,7 @@ async def show_rules(msg: types.Message):
                      'Каждый вопрос имеет 4 варианта ответа, из которых только один является верным. '
                      'Сложность вопросов постоянно возрастает. Время на раздумье над каждым вопросом у игрока не ограничено. '
                      'Каждый из пятнадцати вопросов имеет конкретную денежную стоимость: '
-                     '3 000 000, 1 500 000, 800 000, 400 000, 200 000, *100 000, 50 000, 25 000, 15 000, 10 000, 5 000, 3 000, 2 000, 1 000, 500.'
+                     '3 000 000, 1 500 000, 800 000, 400 000, 200 000, 100 000, 50 000, 25 000, 15 000, 10 000, 5 000, 3 000, 2 000, 1 000, 500. '
                      'Все суммы являются заменяемыми, то есть, ответив на следующий вопрос не суммируются с суммой за ответ на предыдущий.'
                      'В игре существует две несгоравмые суммы 100 000 и 5 000. '
                      'Эта сумма остаётся у игрока даже при неправильном ответе на один из последующих вопросов')
@@ -49,7 +49,8 @@ async def next_question(callback: CallbackQuery):
     qst_kb = InlineKeyboardBuilder()
     for i in range(2, 6):
         qst_kb.add(InlineKeyboardButton(text=f'{i - 1}) {q[i]}', callback_data=f'qst{q[0]}_l{n}_a{i - 1}_ra{q[7]}'))
-    await callback.message.answer(f'Вопрос № {n}:\n{q[1]}', reply_markup=qst_kb.adjust(2).as_markup())
+    await callback.message.answer(f'Вопрос № {n} (из {NUM_QST}):\n{q[1]}', reply_markup=qst_kb.adjust(2).as_markup())
+    await callback.answer()
 
 
 @user_private_router.callback_query(F.data.startswith('qst'))
@@ -63,16 +64,16 @@ async def check_answer(callback: CallbackQuery):
     # l = string(st.split('_')[1])
     l = st[(st.find('_l') + 2):st.find('_a')]
     n = int(l) + 1
-    await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
+    # await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
     if a == r:
         # await callback.message.edit_reply_markup(reply_markup=)
         next_kb = InlineKeyboardBuilder()
         next_kb.add(InlineKeyboardButton(text='Следующий вопрос', callback_data=f'next_qst_{n}'))
         next_kb.add(InlineKeyboardButton(text='Забрать банк!', callback_data='get_bank'))
-        await callback.message.answer('<b>Верный ответ!</b>\nТвой банк: 123',
+        await callback.message.answer(f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n-2]}</b>',
                                       reply_markup=next_kb.adjust(2).as_markup())
     else:
-        await callback.message.answer('<b>Неверный ответ!</b>\nТвой выигрыш: 000')
+        await callback.message.answer(f'<b>Неверный ответ!</b>\nНо ты ответил на {n-1} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n-2]}</b>')
     await callback.answer()
 
 
