@@ -1,6 +1,7 @@
 import sqlite3
+import os
 
-db_name = 'demo.db'
+db_name = os.getenv('SQLITE')
 
 # получение из бд случайного вопроса заданной сложности
 def get_question(level):

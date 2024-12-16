@@ -73,7 +73,7 @@ async def check_answer(callback: CallbackQuery):
         await callback.message.answer(f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n-2]}</b>',
                                       reply_markup=next_kb.adjust(2).as_markup())
     else:
-        await callback.message.answer(f'<b>Неверный ответ!</b>\nНо ты ответил на {n-1} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n-2]}</b>')
+        await callback.message.answer(f'<b>Неверный ответ!</b>\nНо ты ответил на {n-2} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n-2]}</b>')
     await callback.answer()
 
 
