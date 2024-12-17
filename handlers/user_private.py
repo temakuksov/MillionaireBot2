@@ -1,5 +1,3 @@
-import string
-
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import InlineKeyboardButton, CallbackQuery
