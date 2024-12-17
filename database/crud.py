@@ -14,11 +14,11 @@ def get_question(level):
     cn.commit()
     cur.close()
     cn.close()
-    print(q)
+    # print(q)
     return q
 
 
-# добавление нового вопроса -
+# добавление нового вопроса - не реализовано
 def add_question(level):
     cn = sqlite3.connect(db_name)
     # print('сложность=',[level])

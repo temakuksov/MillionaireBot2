@@ -16,7 +16,7 @@ AMOUNT = [
 ]  # Стоимость вопроса
 GUARANTEED_AMOUNT = ['0'] * 5 + ['5 000'] * 5 + ['100 000'] * 5  # несгораемые суммы
 
-NUM_QST = len(AMOUNT) # максимальное количество вопросов в игре
+NUM_QST = len(AMOUNT)  # максимальное количество вопросов в игре
 
 
 @user_private_router.message(CommandStart())
@@ -46,6 +46,7 @@ async def next_question(callback: CallbackQuery):
     st = str(callback.data)
     n = int(st.split('_')[-1])
     q = get_question(n)
+    print (f'user={callback.from_user.full_name}',q)
     qst_kb = InlineKeyboardBuilder()
     for i in range(2, 6):
         qst_kb.add(InlineKeyboardButton(text=f'{i - 1}) {q[i]}', callback_data=f'qst{q[0]}_l{n}_a{i - 1}_ra{q[7]}'))
@@ -63,18 +64,27 @@ async def check_answer(callback: CallbackQuery):
     r = st[-1]
     # l = string(st.split('_')[1])
     l = st[(st.find('_l') + 2):st.find('_a')]
-    n = int(l) + 1
+    n = int(l)
     # await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
     if a == r:
         # await callback.message.edit_reply_markup(reply_markup=)
         next_kb = InlineKeyboardBuilder()
-        next_kb.add(InlineKeyboardButton(text='Следующий вопрос', callback_data=f'next_qst_{n}'))
-        next_kb.add(InlineKeyboardButton(text='Забрать банк!', callback_data='get_bank'))
-        await callback.message.answer(f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n-2]}</b>',
+        next_kb.add(InlineKeyboardButton(text='Следующий вопрос', callback_data=f'next_qst_{n + 1}'))
+        next_kb.add(InlineKeyboardButton(text='Забрать банк!', callback_data=f'get_bank_{n}'))
+        await callback.message.answer(f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n - 1]}</b>\nНесгораемая сумма: {GUARANTEED_AMOUNT[n]}',
                                       reply_markup=next_kb.adjust(2).as_markup())
     else:
-        await callback.message.answer(f'<b>Неверный ответ!</b>\nНо ты ответил на {n-2} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n-2]}</b>')
+        await callback.message.answer(
+            f'<b>Неверный ответ!</b>\nНо ты ответил на {n - 1} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n - 1]}</b>')
     await callback.answer()
+
+
+@user_private_router.callback_query(F.data.startswith('get_bank_'))
+async def get_bank(callback: CallbackQuery):
+    st = str(callback.data)[9:]
+    k = int(st)
+    await callback.message.answer(
+        f'<b>Игра закончена!</b>\nТы ответил на {k} вопрос(а,ов) из {NUM_QST}!\nЛучше синица в руках чем журавль в небе! ;) \nТвой выигрыш: <b>{AMOUNT[k - 1]}</b>')
 
 
 @user_private_router.message()

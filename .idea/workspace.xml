@@ -62,7 +62,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/kuksov/PycharmProjects/MillionaireBot2/handlers",
+    "last_opened_file_path": "C:/Users/kuksov/PycharmProjects/MillionaireBot2",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
@@ -162,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734370971118</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="bot with qst">
+      <option name="closed" value="true" />
+      <created>1734371467614</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1734371467614</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
