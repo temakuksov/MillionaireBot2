@@ -22,7 +22,7 @@ async def start_cmd(msg: types.Message):
     start_kb = InlineKeyboardBuilder()
     start_kb.add(InlineKeyboardButton(text='Начать игру!', callback_data='next_qst_1'))
     await msg.answer(
-        f'Приветствую, {msg.from_user.first_name} (id={msg.from_user.id})\nГотовы стать следующим миллионером!',
+        f'Приветствую, {msg.from_user.first_name} (id={msg.from_user.id})\nГотов стать следующим миллионером?',
         reply_markup=start_kb.as_markup())
 
 
@@ -48,7 +48,8 @@ async def next_question(callback: CallbackQuery):
     qst_kb = InlineKeyboardBuilder()
     for i in range(2, 6):
         qst_kb.add(InlineKeyboardButton(text=f'{i - 1}) {q[i]}', callback_data=f'qst{q[0]}_l{n}_a{i - 1}_ra{q[7]}'))
-    await callback.message.answer(f'Вопрос № {n} (из {NUM_QST}):\n{q[1]}', reply_markup=qst_kb.adjust(2).as_markup())
+    await callback.message.answer(f'Вопрос № {n} (из {NUM_QST}):\n{q[1]} \n'
+                                  f'<i> * Cтоимость вопроса = {AMOUNT[n-1]}</i>', reply_markup=qst_kb.adjust(2).as_markup())
     await callback.answer()
 
 
