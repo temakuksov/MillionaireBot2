@@ -64,7 +64,7 @@ async def check_answer(callback: CallbackQuery):
     # l = string(st.split('_')[1])
     l = st[(st.find('_l') + 2):st.find('_a')]
     n = int(l)
-    # await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
+    await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
     if n == NUM_QST:
         await callback.message.answer(
             f'ПОЗДРАВЛЯЕМ, ТЫ ВЫИГРАЛ!!!\nТвой выигрыш составил: <b>{AMOUNT[n - 1]}</b>')
