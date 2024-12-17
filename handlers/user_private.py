@@ -46,7 +46,7 @@ async def next_question(callback: CallbackQuery):
     st = str(callback.data)
     n = int(st.split('_')[-1])
     q = get_question(n)
-    print (f'user={callback.from_user.full_name}',q)
+    print(f'user={callback.from_user.full_name}', q)
     qst_kb = InlineKeyboardBuilder()
     for i in range(2, 6):
         qst_kb.add(InlineKeyboardButton(text=f'{i - 1}) {q[i]}', callback_data=f'qst{q[0]}_l{n}_a{i - 1}_ra{q[7]}'))
@@ -66,13 +66,17 @@ async def check_answer(callback: CallbackQuery):
     l = st[(st.find('_l') + 2):st.find('_a')]
     n = int(l)
     # await callback.message.answer('<i>callback_data: ' + st + '\n lvl=' + l + ' ans=' + a + ' right_ans=' + r + '</i>')
-    if a == r:
+    if n == NUM_QST:
+        await callback.message.answer(
+            f'ПОЗДРАВЛЯЕМ, ТЫ ВЫИГРАЛ!!!\nТвой выигрыш составил: <b>{AMOUNT[n - 1]}</b>')
+    elif a == r:
         # await callback.message.edit_reply_markup(reply_markup=)
         next_kb = InlineKeyboardBuilder()
-        next_kb.add(InlineKeyboardButton(text='Следующий вопрос', callback_data=f'next_qst_{n + 1}'))
+        next_kb.add(InlineKeyboardButton(text='Перейти к следующему вопросу', callback_data=f'next_qst_{n + 1}'))
         next_kb.add(InlineKeyboardButton(text='Забрать банк!', callback_data=f'get_bank_{n}'))
-        await callback.message.answer(f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n - 1]}</b>\nНесгораемая сумма: {GUARANTEED_AMOUNT[n]}',
-                                      reply_markup=next_kb.adjust(2).as_markup())
+        await callback.message.answer(
+            f'<b>Верный ответ!</b>\nТвой банк: <b>{AMOUNT[n - 1]}</b>\nНесгораемая сумма: {GUARANTEED_AMOUNT[n]}',
+            reply_markup=next_kb.adjust(2).as_markup())
     else:
         await callback.message.answer(
             f'<b>Неверный ответ!</b>\nНо ты ответил на {n - 1} вопрос(а,ов) из {NUM_QST}! Поздравляю!\nТвой выигрыш составил: <b>{GUARANTEED_AMOUNT[n - 1]}</b>')
